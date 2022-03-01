@@ -6,46 +6,57 @@ const btnAgain = document.querySelector('.again')
 const number = document.querySelector('.number')
 const guessInput = document.querySelector('.guess')
 const message = document.querySelector('.message')
-const labelScore = document.querySelector('.score')
-const labelHighScore = document.querySelector('.highscore')
-const bgGreen = document.querySelector('.container')
+const scoreEL = document.querySelector('.score')
+const highScoreEl = document.querySelector('.highscore')
 
 // random number between 1 to 20
 
-const randomNum = Math.floor(Math.random()*20+1)
-
+let randomNum = Math.floor(Math.random()*20+1)
+console.log(randomNum );
 // score
 
 let score = 20
 let highScore = 0
+let lowestScore = 0
 
 // events
-checkBtn.addEventListener('click', check )
+checkBtn.addEventListener('click', check)
 
 btnAgain.addEventListener('click', again)
 
 // function
 function check() {
-    const checkValue = +guessInput.value
-    console.log(randomNum);
-    if(checkValue) {
-        if(randomNum == checkValue) {
-            message.textContent = '🏆 You are Winner'
-            bgGreen.style.background = 'green'
+    const inputValue = +guessInput.value  
+    
+    if(inputValue) {
+        if(inputValue == randomNum) {
             number.textContent = randomNum
-            // randomNum = Math.floor(Math.random()*20+1)
-        } else if(randomNum >=checkValue) {
-            message.textContent = '⬆️ Guess Higher Number'
+            message.textContent = '🏆 You are Winner'
+            document.body.style.background = 'green'
+            randomNum = Math.floor(Math.random()*20+1)  
+            console.log(randomNum);
+            
+            if(highScore < score) {
+                highScore = score
+                highScoreEl.textContent = highScore
+            }
+        } else {
             score--
+            scoreEL.textContent = score
+            document.body.style.background = '#222'
+            message.textContent = '⬆️ Guess Higher Number'
         }
-    } else if(randomNum <= checkValue) {
-        message.textContent = '⬇️ Guess Lower Number'
-        score--
-    }
-    labelScore.textContent = score
-    labelHighScore.textContent = score
+
+    } 
 }
 
 function again() {
-    window.location.reload()
+    message.textContent = 'Start guessing ...'
+    document.body.style.background = '#222'
+    number.textContent = '?'
+    randomNum = Math.floor(Math.random()*20+1)
+    guessInput.value = ''
+    score = 20
+    scoreEL.textContent = '20'
+    console.log(randomNum);
 }
