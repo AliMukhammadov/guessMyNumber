@@ -1,62 +1,87 @@
-'use strict'
-// btn
-const checkBtn = document.querySelector('.check')
-const btnAgain = document.querySelector('.again')
+const answerTextEl = document.getElementById("text");
+const btnagainEl = document.getElementById("btnagain");
+const answerNumberEl = document.getElementById("number");
+const guessInputEl = document.getElementById("guess");
+const btnchekEl = document.querySelector(".check");
+const messageEl = document.getElementById("message");
+const scoreEl = document.querySelector(".score");
+const highscoreEl = document.querySelector(".highscore");
+const modalBgEl = document.querySelector(".modal-bg");
+const modalbtnokEl = document.querySelector(".btn-ok");
+const modalBg1El = document.querySelector(".modal-bg1");
+const modalbtnok1El = document.querySelector(".btn-ok1");
 
-const number = document.querySelector('.number')
-const guessInput = document.querySelector('.guess')
-const message = document.querySelector('.message')
-const scoreEL = document.querySelector('.score')
-const highScoreEl = document.querySelector('.highscore')
+// CHECK BUTTON
+btnchekEl.addEventListener("click", checkNumber);
+guessInputEl.addEventListener("check", (e) => {
+  if (e.key === 13) {
+    return checkNumber();
+  }
+});
+btnagainEl.addEventListener("click", gameAgain);
+modalbtnokEl.addEventListener("click", function () {
+  modalBgEl.classList.remove("bg-active");
+});
 
-// random number between 1 to 20
+//modal lose
+modalbtnok1El.addEventListener("click", function () {
+  modalBg1El.classList.remove("bg-active1");
+});
+// RANDOM NUMBER
+let randomNumber = Math.floor(Math.random() * 20) + 1;
+console.log(randomNumber);
+// SCORE
+let score = 20;
 
-let randomNum = Math.floor(Math.random()*20+1)
-console.log(randomNum );
-// score
+// HIGH SCORE
+let highscore = 0;
 
-let score = 20
-let highScore = 0
-let lowestScore = 0
+function checkNumber() {
+  if (randomNumber == guessInputEl.value) {
+    modalBgEl.classList.add("bg-active");
 
-// events
-checkBtn.addEventListener('click', check)
+    document.body.style.background = "rgb(15, 218, 15)";
+    answerNumberEl.textContent = randomNumber;
+    messageEl.textContent = "You are Winner 🎉";
 
-btnAgain.addEventListener('click', again)
+    if (highscore < score) {
+      highscore = score;
+      highscoreEl.textContent = highscore;
+    }
+  } else if (randomNumber < guessInputEl.value) {
+    messageEl.textContent = "⬇️ Guess Lower Number";
 
-// function
-function check() {
-    const inputValue = +guessInput.value  
-    
-    if(inputValue) {
-        if(inputValue == randomNum) {
-            number.textContent = randomNum
-            message.textContent = '🏆 You are Winner'
-            document.body.style.background = 'green'
-            randomNum = Math.floor(Math.random()*20+1)  
-            console.log(randomNum);
-            
-            if(highScore < score) {
-                highScore = score
-                highScoreEl.textContent = highScore
-            }
-        } else {
-            score--
-            scoreEL.textContent = score
-            document.body.style.background = '#222'
-            message.textContent = '⬆️ Guess Higher Number'
-        }
+    score--;
+    scoreEl.textContent = score;
+    return returAgainscore();
+  } else {
+    messageEl.textContent = "⬆️ Guess Higher Number";
 
-    } 
+    score--;
+    scoreEl.textContent = score;
+    return returAgainscore();
+  }
 }
 
-function again() {
-    message.textContent = 'Start guessing ...'
-    document.body.style.background = '#222'
-    number.textContent = '?'
-    randomNum = Math.floor(Math.random()*20+1)
-    guessInput.value = ''
-    score = 20
-    scoreEL.textContent = '20'
-    console.log(randomNum);
+function returAgainscore() {
+  if (score == 0) {
+    modalBg1El.classList.add("bg-active1");
+    return youLose();
+  }
+}
+
+function gameAgain() {
+  randomNumber = Math.floor(Math.random() * 6);
+  score = 5;
+  scoreEl.textContent = 5;
+  messageEl.textContent = "Start guessing...";
+  document.body.style.background = "#222";
+  answerNumberEl.textContent = "?";
+  guessInputEl.value = "";
+}
+
+function youLose() {
+  score = 1;
+  messageEl.textContent = "You Lose the Game";
+  document.body.style.background = "rgb(248, 9, 9)";
 }

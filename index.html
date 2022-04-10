@@ -6,30 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="style.css" />
     <title>Guess My Number!</title>
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-      <div class="container">
-        <header>
-          <h1>Guess My Number!</h1>
-          <p class="between">(Between 1 and 20)</p>
-          <button class="btn again">Again!</button>
-          <div class="number">?</div>
-        </header>
-        <main>
-          <section class="left">
-            <input type="number" class="guess" />
-            <button class="btn check">Check!</button>
-          </section>
-          <section class="right">
-            <p class="message">Start guessing...</p>
-            <p class="label-score">💯 Score: <span class="score">20</span></p>
-            <p class="label-highscore">
-              🥇 Highscore: <span class="highscore">0</span>
-            </p>
-          </section>
-        </main>
+    <header>
+      <h1 id="text">Guess my number</h1>
+      <p class="between">(Between 1 and 20)</p>
+      <button id="btnagain" class="btn again">Again!</button>
+      <div id="number" class="number">?</div>
+    </header>
+    <main>
+      <section class="left">
+        <input form="input" id="guess" type="number" class="guess" />
+        <button name="input" id="btnchek" class="btn check">Check!</button>
+      </section>
+      <section class="right">
+        <p id="message" class="message">Start guessing...</p>
+        <p id="score" class="label-score">
+          💯 Score: <span class="score">20</span>
+        </p>
+        <p id="highscore" class="label-highscore">
+          🥇 Highscore: <span class="highscore">0</span>
+        </p>
+      </section>
+    </main>
+    <div class="modal-bg">
+      <div class="modal">
+        <h2>You are Winner</h2>
+        <button class="btn-ok">OK</button>
       </div>
+    </div>
+
+    <div class="modal-bg1">
+      <div class="modal1">
+        <h2>You are Loser</h2>
+        <button class="btn-ok1">OK</button>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
